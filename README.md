@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Github
 
-## Getting Started
+- A Platoform for open source projects.
+- We can manage our work like team colabration, issues, pull requests from others on github.
+- We can also use github pages to deploy our frontend application on github.
 
-First, run the development server:
+## Current Knowledge
 
-```bash
-npm run dev
-# or
-yarn dev
+1. use github for code management.
+2. build project on local
+3. use netlify/vercel to deploy oour code to their servers.
+
+### Developer Workflow usecases
+
+#### Usercase 1
+
+1. Manage Code
+2. Handle Team Colabration
+3. Test our development
+4. Deploy our code
+   1. Install dependencies
+   2. Build Project
+   3. deploy it
+
+#### Usercase 2
+
+1. code is deployed, repository is avaiable for few/all people
+2. some one notice a bug and raises a issue
+3. we create a lable for the issue
+4. we assign the issue to a developer
+5. he reproduce the issue
+6. fix it
+7. he raise a PR for the issue
+8. we review and merge
+9. updated code is deployed
+10. the issue is closed
+
+## [Github Actions](https://github.com/features/actions)
+
+- Automate, customize, and execute your software development workflows right in your repository with GitHub Actions.
+- You can discover, create, and share actions to perform any job you'd like, including CI/CD, and combine actions in a completely customized workflow.
+
+### What is Github Actions ?
+
+1. Its a platform to atomate developer workflows.
+2. Means we do not need to do fix set of activities and the system will take care of most of our tasks.
+
+### Why do we need Github Actions ?
+
+- With this tool we can have few automatic actions to be executed wheneven any changes happen to our code.
+- e.g: me changed our code we now want to redeploy it, github actions will do it for us as soon as we pusch it.
+
+### How does it work
+
+1. We create a workfow.yml file
+2. It listens to github events
+   - PR created
+   - PR merged
+   - code pushed
+   - issue created
+3. Workflow we created is triggered for the event.
+
+#### Simple Workflow: CI/CD pipeline
+
+- Steps
+  1. commit code
+  2. test
+  3. build
+  4. deploy
+
+### [Demo](https://github.com/riteshf/counter-app-solution)
+
+1. Getting started
+   1. Clone any of you gitbub repository
+      - e.g.: `git clone https://github.com/riteshf/counter-app-solution.git record`
+      - `cd record`
+      - `npm i`
+   2. On github go to `Actions` and `Setup a Workflow`: Search `Node`
+
+```yml
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: React app
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm i
+      - run: npm run build --if-present
+      - run: npm test
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
